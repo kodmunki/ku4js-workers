@@ -23,13 +23,12 @@ ku4WorkerClient.prototype = {
         this._onError.add(func, scope);
         return this;
     },
-    call: function(Class, constructors, method, arguments, scope, isAsync) {
+    call: function(Class, constructors, method, arguments, isAsync) {
         this._worker.postMessage($.dto({
             Class: Class,
             constructors: constructors,
             method: method,
             arguments: arguments,
-            scope: scope,
             isAsync: isAsync
         }).toJson());
         return this;
@@ -58,7 +57,6 @@ ku4WorkerReceiver.prototype = {
             constructors = obj.constructors,
             method = obj.method,
             args = obj.arguments,
-            scope = obj.scope,
             isAsync = obj.isAsync,
             Class = obj.Class;
 
@@ -66,8 +64,8 @@ ku4WorkerReceiver.prototype = {
             throw $.ku4exception("Argument Exception", "$.ku4WorkerReceiver can only execute json call containing valid Class and method.");
 
         if(isAsync && $.isArray(method)) ku4WorkerReceiver_executeAsyncChain(Class, constructors, method, callback);
-        else if(isAsync) ku4WorkerReceiver_executeAsyncMethod(Class, constructors, method, args, scope, callback);
-        else if($.isString(method)) callback(ku4WorkerReceiver_executeMethod(Class, constructors, method, args, scope));
+        else if(isAsync) ku4WorkerReceiver_executeAsyncMethod(Class, constructors, method, args, callback);
+        else if($.isString(method)) callback(ku4WorkerReceiver_executeMethod(Class, constructors, method, args));
         else if($.isObject(method)) callback(ku4WorkerReceiver_executeMethodObject(Class, constructors, method));
         else if($.isArray(method)) callback(ku4WorkerReceiver_executeChain(Class, constructors, method));
         else if(!$.exists(method)) callback(ku4WorkerReceiver_instantiate(Class, constructors));
@@ -76,16 +74,16 @@ ku4WorkerReceiver.prototype = {
 };
 $.ku4WorkerReceiver = function(){ return new ku4WorkerReceiver(); };
 
-function ku4WorkerReceiver_executeMethod(Class, constructors, method, args, scope)
+function ku4WorkerReceiver_executeMethod(Class, constructors, method, args)
 {
     var instance = ku4WorkerReceiver_instantiate(Class, constructors);
-    return ku4WorkerReceiver_execute(instance, method, args, scope)
+    return ku4WorkerReceiver_execute(instance, method, args)
 }
 
-function ku4WorkerReceiver_executeAsyncMethod(Class, constructors, method, args, scope, callback)
+function ku4WorkerReceiver_executeAsyncMethod(Class, constructors, method, args, callback)
 {
     var instance = ku4WorkerReceiver_instantiate(Class, constructors);
-    return ku4WorkerReceiver_executeAsync(instance, method, args, scope, callback)
+    return ku4WorkerReceiver_executeAsync(instance, method, args, callback)
 }
 
 function ku4WorkerReceiver_executeMethodObject(Class, constructors, method)
@@ -138,12 +136,12 @@ function ku4WorkerReceiver_instantiate(Class, constructors) {
     return _class.apply(this, constructors);
 }
 
-function ku4WorkerReceiver_execute(instance, method, args, scope)
+function ku4WorkerReceiver_execute(instance, method, args)
 {
-    return instance[method].apply(scope || instance, args);
+    return instance[method].apply(instance, args);
 }
 
-function ku4WorkerReceiver_executeAsync(instance, method, args, scope, callback)
+function ku4WorkerReceiver_executeAsync(instance, method, args, callback)
 {
     var index = args.indexOf("__CALLBACK__");
     while(index !== -1) {
@@ -151,7 +149,7 @@ function ku4WorkerReceiver_executeAsync(instance, method, args, scope, callback)
         index = args.indexOf("__CALLBACK__");
     }
 
-    instance[method].apply(scope || instance, args);
+    instance[method].apply(instance, args);
 }
 
 })();

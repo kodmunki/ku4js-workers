@@ -91,6 +91,6 @@ $(function() {
                 {"uri": ["./asyncResponse.stub.json"]},
                 {"onSuccess": ["__CALLBACK__"]},
                 {"onError": ["__CALLBACK__"]},
-                "call"], null, null, true);
+                "call"], null, true);
     });
 });
