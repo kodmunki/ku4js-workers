@@ -52,4 +52,20 @@ $(function() {
                 "toObject"
             ]);
     });
+
+    asyncTest("call async method chain success", function () {
+        expect(2);
+        $.ku4WorkerClient("stubs/receiver.stub.js")
+            .onSuccess(function(data){
+                equal(data[0], "{response: true}");
+                ok(/[\w\d]{32}/.test(data[1]))
+                start();
+            })
+            .call("$.service", [], [
+                {"uri": ["./asyncResponse.stub.json"]},
+                {"onSuccess": ["__CALLBACK__"]},
+                {"onError": ["__CALLBACK__"]},
+                "call"], null, null, true);
+    });
+
 });

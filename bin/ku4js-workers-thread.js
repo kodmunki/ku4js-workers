@@ -15,5 +15,5 @@ importScripts("ku4js-data.js");
 importScripts("ku4js-workers.js");
 
 onmessage = function(event) {
-    postMessage($.ku4WorkerReceiver().execute(event));
+    $.ku4WorkerReceiver().execute(event, function() { postMessage.apply(self, arguments); });
 };

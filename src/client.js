@@ -22,13 +22,14 @@ ku4WorkerClient.prototype = {
         this._onError.add(func, scope);
         return this;
     },
-    call: function(Class, constructors, method, arguments, scope) {
+    call: function(Class, constructors, method, arguments, scope, isAsync) {
         this._worker.postMessage($.dto({
             Class: Class,
             constructors: constructors,
             method: method,
             arguments: arguments,
-            scope: scope
+            scope: scope,
+            isAsync: isAsync
         }).toJson());
         return this;
     }
