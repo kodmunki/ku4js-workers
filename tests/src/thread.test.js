@@ -15,7 +15,8 @@ $(function() {
     asyncTest("call single method no args success", function () {
         expect(3);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(data){
+            .onSuccess(function(message){
+                var data = $.dto.parseJson(message).toObject();
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
@@ -27,7 +28,8 @@ $(function() {
     asyncTest("call single method object no args success", function () {
         expect(3);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(data){
+            .onSuccess(function(message){
+                var data = $.dto.parseJson(message).toObject();
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
@@ -39,7 +41,8 @@ $(function() {
     asyncTest("call method chain success", function () {
         expect(5);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(data){
+            .onSuccess(function(message){
+                var data = $.dto.parseJson(message).toObject();
                 ok(!data.a);
                 equal(data.b, 2);
                 equal(data.c, 3);

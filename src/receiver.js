@@ -66,7 +66,9 @@ function ku4WorkerReceiver_executeAsyncChain(Class, constructors, methods, callb
                 args = method[methodName],
                 index = args.indexOf("__CALLBACK__");
             while(index !== -1) {
-                args[index] = function() { callback(arguments); };
+                args[index] = function() {
+                    callback($.list.parseArguments(arguments).toArray());
+                };
                 index = args.indexOf("__CALLBACK__");
             }
             instance = ku4WorkerReceiver_execute(instance, methodName, args);
