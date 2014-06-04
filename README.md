@@ -22,3 +22,28 @@ this process:
 * PROJNAME (The name of your project)
 * STARTMSG (A message to echo at start of build)
 * ENDMSG (A message to echo at end of build)
+
+
+#Documentation
+
+##ku4WorkerClient
+_Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
+
+###ku4WorkerClient Examples:
+
+####$.ku4WorkerClient.thread()
+
+####$.ku4WorkerClient(PATH)
+
+##ku4WorkerReceiver
+_Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
+
+###ku4WorkerReceiver Notes:
