@@ -77,7 +77,9 @@ function ku4WorkerReceiver_executeAsyncChain(Class, constructors, methods, callb
 }
 
 function ku4WorkerReceiver_instantiate(Class, constructors) {
-    var namespace = Class.split("."),
+    var isNew = /^new\s.+$/.test($.str.trim(Class)),
+        className = Class.replace(/^new\s/, ""),
+        namespace = className.split("."),
         rootObject = namespace.shift(),
         _class = eval("(" + rootObject + ")");
 
