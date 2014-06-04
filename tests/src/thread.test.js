@@ -12,12 +12,12 @@ $(function() {
         ok($.ku4WorkerClient.thread());
     });
 
-    asyncTest("call functions", function () {
+    asyncTest("call function", function () {
         expect(1);
         $.ku4WorkerClient.thread()
             .onSuccess(function(message) {
-                var data = $.dto.parseJson(message).toObject();
-                equal(data[0], 4.15);
+                var data = $.json.deserialize(message);
+                equal(data, 4.15);
                 start();
             })
             .call("$.math.round", [4.153, -2]);

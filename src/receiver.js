@@ -13,7 +13,6 @@ ku4WorkerReceiver.prototype = {
         if(!$.exists(Class))
             throw $.ku4exception("Argument Exception", "$.ku4WorkerReceiver can only execute json call containing valid Class and method.");
 
-
         if(isAsync && $.isArray(method)) ku4WorkerReceiver_executeAsyncChain(Class, constructors, method, callback);
         else if(isAsync) ku4WorkerReceiver_executeAsyncMethod(Class, constructors, method, args, scope, callback);
         else if($.isString(method)) callback(ku4WorkerReceiver_executeMethod(Class, constructors, method, args, scope));

@@ -10,6 +10,28 @@ $(function() {
         ok($.ku4WorkerClient("stubs/receiver.stub.js"));
     });
 
+    asyncTest("call function", function () {
+        expect(1);
+        $.ku4WorkerClient("stubs/receiver.stub.js")
+            .onSuccess(function(message) {
+                var data = $.json.deserialize(message);
+                equal(data, 4.15);
+                start();
+            })
+            .call("$.math.round", [4.153, -2]);
+    });
+
+    asyncTest("call single method no args success", function () {
+        expect(1);
+        $.ku4WorkerClient("stubs/receiver.stub.js")
+            .onSuccess(function(message) {
+                var data = $.json.deserialize(message);
+                equal(data, "B145.67");
+                start();
+            })
+            .call("$.money", [145.67, 'B'], "toString");
+    });
+
     asyncTest("call single method no args success", function () {
         expect(3);
         $.ku4WorkerClient("stubs/receiver.stub.js")
