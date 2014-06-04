@@ -12,6 +12,17 @@ $(function() {
         ok($.ku4WorkerClient.thread());
     });
 
+    asyncTest("call functions", function () {
+        expect(1);
+        $.ku4WorkerClient.thread()
+            .onSuccess(function(message) {
+                var data = $.dto.parseJson(message).toObject();
+                equal(data[0], 4.15);
+                start();
+            })
+            .call("$.math.round", [4.153, -2]);
+    });
+
     asyncTest("call single method no args success", function () {
         expect(3);
         $.ku4WorkerClient.thread()
@@ -56,5 +67,21 @@ $(function() {
                 {"remove": ["a"]},
                 "toObject"
             ]);
+    });
+
+    asyncTest("call async method chain success", function () {
+        expect(2);
+        $.ku4WorkerClient.thread()
+            .onSuccess(function(message){
+                var data = $.dto.parseJson(message).toObject();
+                equal(data[0], "{response: true}");
+                ok(/[\w\d]{32}/.test(data[1]))
+                start();
+            })
+            .call("$.service", [], [
+                {"uri": ["../stubs/asyncResponse.stub.json"]},
+                {"onSuccess": ["__CALLBACK__"]},
+                {"onError": ["__CALLBACK__"]},
+                "call"], null, null, true);
     });
 });

@@ -71,5 +71,4 @@ $(function() {
                 {"onError": ["__CALLBACK__"]},
                 "call"], null, null, true);
     });
-
 });
