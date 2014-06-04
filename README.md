@@ -1,7 +1,6 @@
-#ku4js-_template
+#ku4js-workers
 
-
-kodmunki™ utilities for JavaScript project template.
+kodmunki™ utilities for JavaScript Web Workers.
 
 *(The following are the instructions from the build script found in the template at /_build/build.sh)*
 
@@ -25,6 +24,7 @@ this process:
 
 
 #Documentation
+
 
 ##ku4WorkerClient
 _Documentation Coming Soon_
