@@ -17,7 +17,7 @@ importScripts("ku4js-workers.js");
 
 /*== Add additional imports here ==*/
 
-//importScripts("[PATH]");
+importScripts("../bin/example-workers.js");
 
 /*=================================*/
 

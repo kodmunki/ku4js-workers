@@ -1,1 +1,1 @@
-(function(a){function b(){}b.prototype={calculateNumberOfAnswers:function(d){var f=$.list(),c=0;while(d>c++){var e=$.math.round(Math.random()*Math.random()*10,-5);f.add(e)}return f.toArray()}};$.calculator=function(){return new b()}})();
+(function(a){function b(){}b.prototype={calculateNumberOfAnswers:function(d){var g=$.list(),c=0,f=0;while(d>c++){var e=$.math.round(Math.random()*Math.random()*10,-5);g.add(e)}g.each(function(h){return f+=h});return $.math.round(f,-3)}};$.calculator=function(){return new b()}})();
