@@ -17,9 +17,11 @@ importScripts("ku4js-workers.js");
 
 /*== Add additional imports here ==*/
 
-importScripts("../bin/example-workers.js");
+//importScripts("[PATH]");
 
 /*=================================*/
+
+if(!$ || !$.ku4) throw new Error("Invalid importScripts paths in ku4js-workers-thread.");
 
 onmessage = function(event) {
     $.ku4WorkerReceiver().execute(event, function() {

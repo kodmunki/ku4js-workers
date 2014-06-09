@@ -103,6 +103,10 @@ $(function() {
                     start();
                 });
             })
+            .onError(function(err, store){
+                console.log(err, store);
+                start();
+            })
             .invoke("$.ku4indexedDbStore", [], {"read": ["persons",
                 "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(){ __CALLBACK__; }) }"
             ]}, true);

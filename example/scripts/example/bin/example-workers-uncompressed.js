@@ -4,10 +4,10 @@ calculator.prototype = {
     calculateNumberOfAnswers: function(iteration){
         var answers = $.list(), i = 0;
         while(iteration > i++) {
-            var answer = Math.random() * Math.random();
+            var answer = $.math.round(Math.random() * Math.random() * 10, -5);
             answers.add(answer);
         }
-        return answers;
+        return answers.toArray();
     }
 };
 

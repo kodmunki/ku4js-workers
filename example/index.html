@@ -7,15 +7,10 @@
 <body>
 
     <div>
-        <button onclick="calculate(100000); return;">Calculate Primes</button>
-        <span id="calculationResult"></span>
+        <button onclick="calculate(10000); return;">Calculate and Log 10000 Randoms</button>
     </div>
     <div>
-        <button onclick="controller.save(); return;">Save to ku4store</button>
-        <div>
-            ku4store data
-            <div id="ku4storeData"></div>
-        </div>
+        <button onclick="console.log('UI Thread Not Locked!'); return;">Log Proof of No UI Thread Lock</button>
     </div>
     <script language="javascript" src="./scripts/example/lib/ku4js-kernel.js"></script>
     <script language="javascript" src="./scripts/example/lib/ku4js-data.js"></script>
