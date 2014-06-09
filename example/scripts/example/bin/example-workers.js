@@ -1,0 +1,1 @@
+(function(a){function b(){}b.prototype={calculateNumberOfAnswers:function(d){var f=$.list(),c=0;while(d>c++){var e=Math.random()*Math.random();f.add(e)}return f}};$.calculator=function(){return new b()}})();

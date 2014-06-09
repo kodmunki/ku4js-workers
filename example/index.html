@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ku4workers example</title>
+</head>
+<body>
+
+    <div>
+        <button onclick="calculate(100000); return;">Calculate Primes</button>
+        <span id="calculationResult"></span>
+    </div>
+    <div>
+        <button onclick="controller.save(); return;">Save to ku4store</button>
+        <div>
+            ku4store data
+            <div id="ku4storeData"></div>
+        </div>
+    </div>
+    <script language="javascript" src="./scripts/example/lib/ku4js-kernel.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-data.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-reflection.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-workers.js"></script>
+    <script language="javascript" src="./scripts/example/bin/example-workers.js"></script>
+    <script language="javascript" src="./scripts/example/applications/example.js"></script>
+</body>
+</html>

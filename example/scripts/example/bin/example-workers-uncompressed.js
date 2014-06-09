@@ -1,3 +1,4 @@
+(function(l){
 function calculator() { }
 calculator.prototype = {
     calculateNumberOfAnswers: function(iteration){
@@ -11,3 +12,5 @@ calculator.prototype = {
 };
 
 $.calculator = function(){ return new calculator(); };
+
+})();

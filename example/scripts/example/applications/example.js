@@ -1,14 +1,13 @@
-var controller;
-$(function(){
-    var appName = "example",
-        app = $.ku4webApp.app().throwErrors();
-    controller = $.ku4webApp.controllers[appName](app);
-    $.ku4webApp.views[appName](app);
+$.ku4WorkerClient.threadPath("scripts/example/lib/ku4js-workers-thread.js");
 
-/*======================================================*/
+function calculate(iterations) {
 
- //[Other desired views or initialization scripting HERE]
-
-/*======================================================*/
-
-});
+    $.ku4WorkerClient.thread()
+        .onSuccess(function(data){
+            console.log(data);
+        })
+        .onError(function(data){
+            console.log(data);
+        })
+        .invoke("$.calculator", [], "calculateNumberOfAnswers", [100000]);
+}

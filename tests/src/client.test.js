@@ -18,7 +18,6 @@ $(function() {
                 equal(data, 4.15);
                 start();
             })
-            .onError(function(){ console.log("ERROR == ", arguments)})
             .invoke("$.math", [], "round", [4.153, -2]);
     });
 
@@ -37,7 +36,6 @@ $(function() {
         expect(3);
         $.ku4WorkerClient("stubs/receiver.stub.js")
             .onSuccess(function(data){
-                console.log(data);
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
@@ -91,6 +89,23 @@ $(function() {
                 {"onSuccess": ["__CALLBACK__"]},
                 {"onError": ["__CALLBACK__"]},
                 "call"], true);
+    });
+
+    asyncTest("invoke async method chain with continued processing", function () {
+        expect(2);
+        $.ku4WorkerClient("stubs/receiver.stub.js")
+            .onSuccess(function(err, store) {
+                equal(err, null);
+
+                store.read("persons", function(err, collection) {
+                    equal(collection.find({id:1})[0].name, "myName");
+                    collection.remove();
+                    start();
+                });
+            })
+            .invoke("$.ku4indexedDbStore", [], {"read": ["persons",
+                "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(){ __CALLBACK__; }) }"
+            ]}, true);
     });
 
 });
