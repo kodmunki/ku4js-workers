@@ -15,21 +15,16 @@ function ku4WorkerClient(path) {
 }
 ku4WorkerClient.prototype = {
     onSuccess: function(func, scope) {
-        this._onSuccess.add(func, scope);
+        this._onSuccess.add(function(message) { func.apply(scope, $.json.deserialize(message)); });
         return this;
     },
     onError: function(func, scope) {
-        this._onError.add(func, scope);
+        this._onError.add(function(message) { func.apply(scope, $.json.deserialize(message)); });
         return this;
     },
-    call: function(Class, constructors, method, arguments, isAsync) {
-        this._worker.postMessage($.dto({
-            Class: Class,
-            constructors: constructors,
-            method: method,
-            arguments: arguments,
-            isAsync: isAsync
-        }).toJson());
+    invoke: function(Class, constructors, method, args, isAsync) {
+        var message = $.json.serialize([Class, constructors, method, args, isAsync]);
+        this._worker.postMessage(message);
         return this;
     }
 };

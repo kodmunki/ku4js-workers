@@ -3,7 +3,7 @@ $(function() {
         equal(s, false, m);
     }
 
-    module("worker Test");
+    module("client Test");
 
     test("new", function () {
         expect(1);
@@ -18,7 +18,8 @@ $(function() {
                 equal(data, 4.15);
                 start();
             })
-            .call("$.math.round", [4.153, -2]);
+            .onError(function(){ console.log("ERROR == ", arguments)})
+            .invoke("$.math", [], "round", [4.153, -2]);
     });
 
     asyncTest("call single method no args success", function () {
@@ -29,20 +30,20 @@ $(function() {
                 equal(data, "B145.67");
                 start();
             })
-            .call("$.money", [145.67, 'B'], "toString");
+            .invoke("$.money", [145.67, 'B'], "toString");
     });
 
     asyncTest("call single method no args success", function () {
         expect(3);
         $.ku4WorkerClient("stubs/receiver.stub.js")
-            .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
+            .onSuccess(function(data){
+                console.log(data);
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], "toObject");
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], "toObject");
     });
 
     asyncTest("call single method object no args success", function () {
@@ -55,7 +56,7 @@ $(function() {
                 equal(data.c, 3);
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], {"toObject": []});
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], {"toObject": []});
     });
 
     asyncTest("call method chain success", function () {
@@ -70,7 +71,7 @@ $(function() {
                 equal(data.z, "test");
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], [
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], [
                 {"add": ["d", 100]},
                 {"add": ["z", "test"]},
                 {"remove": ["a"]},
@@ -79,18 +80,17 @@ $(function() {
     });
 
     asyncTest("call async method chain success", function () {
-        expect(2);
+        expect(1);
         $.ku4WorkerClient("stubs/receiver.stub.js")
             .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
-                equal(data[0], "{response: true}");
-                ok(/[\w\d]{32}/.test(data[1]))
+                equal(message, "{response: true}");
                 start();
             })
-            .call("$.service", [], [
+            .invoke("$.service", [], [
                 {"uri": ["./asyncResponse.stub.json"]},
                 {"onSuccess": ["__CALLBACK__"]},
                 {"onError": ["__CALLBACK__"]},
-                "call"], null, true);
+                "call"], true);
     });
+
 });

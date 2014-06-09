@@ -12,6 +12,7 @@
 
 importScripts("ku4js-kernel.js");
 importScripts("ku4js-data.js");
+importScripts("ku4js-reflection.js");
 importScripts("ku4js-workers.js");
 
 /*== Add additional imports here ==*/
@@ -21,5 +22,8 @@ importScripts("ku4js-workers.js");
 /*=================================*/
 
 onmessage = function(event) {
-    $.ku4WorkerReceiver().execute(event, function(result) { postMessage($.json.serialize(result)); });
+    $.ku4WorkerReceiver().execute(event, function() {
+        var result = $.list.parseArguments(arguments).toArray();
+        postMessage($.json.serialize(result));
+    });
 };

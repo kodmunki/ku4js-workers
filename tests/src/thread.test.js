@@ -12,48 +12,44 @@ $(function() {
         ok($.ku4WorkerClient.thread());
     });
 
-    asyncTest("call function", function () {
+    asyncTest("invoke function", function () {
         expect(1);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(message) {
-                var data = $.json.deserialize(message);
+            .onSuccess(function(data) {
                 equal(data, 4.15);
                 start();
             })
-            .call("$.math.round", [4.153, -2]);
+            .invoke("$.math", [], "round", [4.153, -2]);
     });
 
-    asyncTest("call single method no args success", function () {
+    asyncTest("invoke single method no args success", function () {
         expect(3);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
+            .onSuccess(function(data){
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], "toObject");
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], "toObject");
     });
 
-    asyncTest("call single method object no args success", function () {
+    asyncTest("invoke single method object no args success", function () {
         expect(3);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
+            .onSuccess(function(data){
                 equal(data.a, 1);
                 equal(data.b, 2);
                 equal(data.c, 3);
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], {"toObject": []});
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], {"toObject": []});
     });
 
-    asyncTest("call method chain success", function () {
+    asyncTest("invoke method chain success", function () {
         expect(5);
         $.ku4WorkerClient.thread()
-            .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
+            .onSuccess(function(data){
                 ok(!data.a);
                 equal(data.b, 2);
                 equal(data.c, 3);
@@ -61,7 +57,7 @@ $(function() {
                 equal(data.z, "test");
                 start();
             })
-            .call("$.dto", [{'a':1, 'b':2, 'c':3}], [
+            .invoke("$.dto", [{'a':1, 'b':2, 'c':3}], [
                 {"add": ["d", 100]},
                 {"add": ["z", "test"]},
                 {"remove": ["a"]},
@@ -69,19 +65,34 @@ $(function() {
             ]);
     });
 
-    asyncTest("call async method chain success", function () {
-        expect(2);
+    asyncTest("invoke async method chain success", function () {
+        expect(1);
         $.ku4WorkerClient.thread()
             .onSuccess(function(message){
-                var data = $.dto.parseJson(message).toObject();
-                equal(data[0], "{response: true}");
-                ok(/[\w\d]{32}/.test(data[1]))
+                equal(message, "{response: true}");
                 start();
             })
-            .call("$.service", [], [
+            .invoke("$.service", [], [
                 {"uri": ["../stubs/asyncResponse.stub.json"]},
                 {"onSuccess": ["__CALLBACK__"]},
                 {"onError": ["__CALLBACK__"]},
-                "call"], null, true);
+                "call"], true);
+    });
+
+    asyncTest("invoke async method chain with continued processing", function () {
+        expect(2);
+        $.ku4WorkerClient.thread()
+            .onSuccess(function(err, store) {
+                equal(err, null);
+
+                store.read("persons", function(err, collection) {
+                    equal(collection.find({id:1})[0].name, "myName");
+                    collection.remove();
+                    start();
+                });
+            })
+            .invoke("$.ku4indexedDbStore", [], {"read": ["persons",
+                "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(){ __CALLBACK__; }) }"
+            ]}, true);
     });
 });
