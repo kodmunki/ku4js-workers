@@ -40,7 +40,7 @@ ku4WorkerClient.prototype = {
     onError: function(func, scope) {
         this._onError.add(function(message) {
             var args = $.json.deserialize(message);
-            if(!$.isArray(args)) args = [args]; 
+            if(!$.isArray(args)) args = [args];
             args.push(this._processId);
             func.apply(scope, args);
         }, this);
