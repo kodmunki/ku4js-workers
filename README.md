@@ -32,7 +32,7 @@ this process:
 | onSuccess(func:_Function_[, scope:_Object_]) | this | Subscribes func to be called in scope when the worker client has completed successfully. |
 | onCanceled(func:_Function_[, scope:_Object_]) | this | Subscribes func to be called in scope when the worker client process has been canceled. |
 | onError(func:_Function_[, scope:_Object_]) | this | Subscribes func to be called in scope when the worker client is invoked |
-| invoke(Class:_String_, constructors:_Array_[, method(s):_String_|_Array[, args:_Array_[, isAsync:_Boolean_]]]) | this | Invokes an instance of the specified class and supported method(s) sync or async _(More on this method and supported overloads below in the examples)_ |
+| invoke(Class:_String_, constructors:_Array_[, method(s):_String_/_Array[, args:_Array_[, isAsync:_Boolean_]]]) | this | Invokes an instance of the specified class and supported method(s) sync or async _(More on this method and supported overloads below in the examples)_ |
 | cancel() | this | Cancels the currently running process |
 | thread() | ku4workerClient | Static class method that instantiates a new ku4workerClient using the receiver path specified by threadPath(). |
 | threadPath(path:_String_) | this | Specifies the path to the receiver file that will be used when thread() is called. |
