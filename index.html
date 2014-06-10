@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ku4js-workers by kodmunki</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ku4js-workers</h1>
+        <p>kodmunki™ untilties for JavaScript Web Workers</p>
+
+        <p class="view"><a href="https://github.com/kodmunki/ku4js-workers">View the Project on GitHub <small>kodmunki/ku4js-workers</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/kodmunki/ku4js-workers/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4js-workers/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4js-workers">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="ku4js-workers" class="anchor" href="#ku4js-workers"><span class="octicon octicon-link"></span></a>ku4js-workers</h1>
+
+<p>kodmunki™ utilities for JavaScript Web Workers.</p>
+
+<p><em>(The following are the instructions from the build script found in the template at /_build/build.sh)</em></p>
+
+<h4>
+<a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h4>
+
+<hr><p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
+
+<ul>
+<li>root<br><ul>
+<li>_build (This build script and the yuicompressor)</li>
+<li>bin (The compiled scripts will appear here)</li>
+<li>src (All script files go here)</li>
+</ul>
+</li>
+</ul><p>The following variables found in setup () are
+expected to be changed by the developer running
+this process:</p>
+
+<ul>
+<li>PROJNAME (The name of your project)</li>
+<li>STARTMSG (A message to echo at start of build)</li>
+<li>ENDMSG (A message to echo at end of build)</li>
+</ul><h1>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<h2>
+<a name="ku4workerclient" class="anchor" href="#ku4workerclient"><span class="octicon octicon-link"></span></a>ku4workerClient</h2>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>processId()</td>
+<td>String</td>
+<td>Returns a ku4 uid 32 byte unique string ID.</td>
+</tr>
+<tr>
+<td>onInvoked(func:<em>Function</em>[, scope:<em>Object</em>])</td>
+<td>this</td>
+<td>Subscribes func to be called in scope when the worker client is invoked.</td>
+</tr>
+<tr>
+<td>onSuccess(func:<em>Function</em>[, scope:<em>Object</em>])</td>
+<td>this</td>
+<td>Subscribes func to be called in scope when the worker client has completed successfully.</td>
+</tr>
+<tr>
+<td>onCanceled(func:<em>Function</em>[, scope:<em>Object</em>])</td>
+<td>this</td>
+<td>Subscribes func to be called in scope when the worker client process has been canceled.</td>
+</tr>
+<tr>
+<td>onError(func:<em>Function</em>[, scope:<em>Object</em>])</td>
+<td>this</td>
+<td>Subscribes func to be called in scope when the worker client is invoked</td>
+</tr>
+<tr>
+<td>invoke(Class:<em>String</em>, constructors:<em>Array</em>[, method(s):<em>String</em>
+</td>
+<td>
+<em>Array[, args:_Array</em>[, isAsync:<em>Boolean</em>]]])</td>
+<td>this</td>
+</tr>
+<tr>
+<td>cancel()</td>
+<td>this</td>
+<td>Cancels the currently running process</td>
+</tr>
+<tr>
+<td>thread()</td>
+<td>ku4workerClient</td>
+<td>Static class method that instantiates a new ku4workerClient using the receiver path specified by threadPath().</td>
+</tr>
+<tr>
+<td>threadPath(path:<em>String</em>)</td>
+<td>this</td>
+<td>Specifies the path to the receiver file that will be used when thread() is called.</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="ku4workerclient-examples" class="anchor" href="#ku4workerclient-examples"><span class="octicon octicon-link"></span></a>ku4workerClient Examples:</h3>
+
+<p>There are numerous ways to leverage the ku4workerClient in a project architecture. A few of the most common are
+described here:</p>
+
+<h4>
+<a name="ku4workerclientthread" class="anchor" href="#ku4workerclientthread"><span class="octicon octicon-link"></span></a>$.ku4workerClient.thread()</h4>
+
+<p>The ku4workerClient.thread method will spawn new ku4workerClient threads using the ku4js-workers-thread.js file or another
+receiver file specified using the ku4workerClient threadPath method. Note that the threadPath method sets one global path.
+This is often fine as many projects will have one receiver file that contain all necessary assets for any thread spawning
+<em>(See comments in the ku4js-workers-thread.js file)</em>. By default this path is set to the ku4js-workers-thread.js file that
+should be in the same directory as the ku4js-workers.js file. This is the same as the following set up:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">ku4workerClient</span><span class="p">.</span><span class="nx">threadPath</span><span class="p">(</span><span class="s2">"ku4js-thread-path.js"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">threadUsingThreadPath</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ku4workerClient</span><span class="p">.</span><span class="nx">thread</span><span class="p">();</span>
+</pre></div>
+
+<h4>
+<a name="ku4workerclientpath" class="anchor" href="#ku4workerclientpath"><span class="octicon octicon-link"></span></a>$.ku4workerClient(PATH)</h4>
+
+<p>For those projects that require multiple ku4workerReceivers you can create the ku4workerClients by instatiating new
+instances using the constructor method and passing the receiver path to the constructor. This means of creating a
+ku4workerClient allows the developer to create various types of potential threads that, when spawned, may contain
+different assets. Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">thread1</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ku4workerClient</span><span class="p">(</span><span class="s2">"myReceiverPath"</span><span class="p">),</span>
+    <span class="nx">thread2</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ku4workerClient</span><span class="p">(</span><span class="s2">"myOtherReceiverPath"</span><span class="p">);</span>
+
+<span class="nx">thread1</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="s2">"new myClass"</span><span class="p">,</span> <span class="p">[],</span> <span class="s2">"myMethod"</span><span class="p">);</span>
+<span class="nx">thread2</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="s2">"new otherClass"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"myConstructors"</span><span class="p">],</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"fluentMethod1"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"args"</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"fluentMethod2"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"arg1"</span><span class="p">,</span> <span class="s2">"arg2"</span><span class="p">]},</span>
+    <span class="s2">"toString"</span>
+<span class="p">]);</span>
+</pre></div>
+
+<h2>
+<a name="ku4workerreceiver" class="anchor" href="#ku4workerreceiver"><span class="octicon octicon-link"></span></a>ku4workerReceiver</h2>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td>execute</td>
+<td>void</td>
+<td>This method is called by the ku4js-workers-thread file and needed be called otherwise.</td>
+</tr></tbody>
+</table><h3>
+<a name="ku4workerreceiver-notes" class="anchor" href="#ku4workerreceiver-notes"><span class="octicon octicon-link"></span></a>ku4workerReceiver Notes:</h3>
+
+<p>Each ku4worker set up requires a ku4workerReceiver. These receivers are called from within the ku4js-workers-thread.js
+file. It is expected that any and all threads will leverage <em>the</em> or a modified copy of <em>the</em> ku4js-workers-thread.js
+file. More information on this file can be found in the comments within the file itself and in the example project
+found in the /example directory.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/kodmunki">kodmunki</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
