@@ -1,5 +1,5 @@
-function ku4WorkerReceiver() { }
-ku4WorkerReceiver.prototype = {
+function ku4workerReceiver() { }
+ku4workerReceiver.prototype = {
     execute: function(event, callback){
         var data = ($.exists(event) && $.exists(event.data)) ? event.data : event,
             args = $.json.deserialize(data);
@@ -14,4 +14,4 @@ ku4WorkerReceiver.prototype = {
         else return callback($.ku4reflection.invoke(args));
     }
 };
-$.ku4WorkerReceiver = function(){ return new ku4WorkerReceiver(); };
+$.ku4workerReceiver = function(){ return new ku4workerReceiver(); };

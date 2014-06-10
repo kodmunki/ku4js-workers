@@ -5,16 +5,16 @@ $(function() {
 
     module("thread Test");
 
-    $.ku4WorkerClient.threadPath("_dependencies/ku4js-workers-thread.js");
+    $.ku4workerClient.threadPath("_dependencies/ku4js-workers-thread.js");
 
     test("new", function () {
         expect(1);
-        ok($.ku4WorkerClient.thread());
+        ok($.ku4workerClient.thread());
     });
 
     asyncTest("invoke function", function () {
         expect(1);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(data) {
                 equal(data, 4.15);
                 start();
@@ -24,7 +24,7 @@ $(function() {
 
     asyncTest("invoke single method no args success", function () {
         expect(3);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(data){
                 equal(data.a, 1);
                 equal(data.b, 2);
@@ -36,7 +36,7 @@ $(function() {
 
     asyncTest("invoke single method object no args success", function () {
         expect(3);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(data){
                 equal(data.a, 1);
                 equal(data.b, 2);
@@ -48,7 +48,7 @@ $(function() {
 
     asyncTest("invoke method chain success", function () {
         expect(5);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(data){
                 ok(!data.a);
                 equal(data.b, 2);
@@ -67,7 +67,7 @@ $(function() {
 
     asyncTest("invoke async method chain success", function () {
         expect(1);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(message){
                 equal(message, "{response: true}");
                 start();
@@ -81,7 +81,7 @@ $(function() {
 
     asyncTest("invoke async method chain with continued processing", function () {
         expect(2);
-        $.ku4WorkerClient.thread()
+        $.ku4workerClient.thread()
             .onSuccess(function(err, store) {
                 equal(err, null);
 

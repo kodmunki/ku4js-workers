@@ -1,4 +1,4 @@
-function ku4WorkerClient(path) {
+function ku4workerClient(path) {
     if(!$.exists(Worker))
         throw $.ku4exception("Unsupported Feature", "Client does not support Workers.");
 
@@ -18,7 +18,7 @@ function ku4WorkerClient(path) {
     this._onError = onError;
     this._worker = worker;
 }
-ku4WorkerClient.prototype = {
+ku4workerClient.prototype = {
     processId: function(){ return this._processId; },
     onInvoked: function(func, scope) {
         this._onInvoked.add(function() { func.call(scope, this._processId); }, this);
@@ -59,16 +59,16 @@ ku4WorkerClient.prototype = {
     }
 };
 
-$.ku4WorkerClient = function(path){ return new ku4WorkerClient(path); };
+$.ku4workerClient = function(path){ return new ku4workerClient(path); };
 
 var __ku4workerThreadPath = "ku4js-workers-thread.js";
-$.ku4WorkerClient.threadPath = function(path){ __ku4workerThreadPath = path; };
-$.ku4WorkerClient.thread = function() {
+$.ku4workerClient.threadPath = function(path){ __ku4workerThreadPath = path; };
+$.ku4workerClient.thread = function() {
     try {
-        return new ku4WorkerClient(__ku4workerThreadPath);
+        return new ku4workerClient(__ku4workerThreadPath);
     }
     catch(e)
     {
-        throw $.ku4exception("Invalid path", "ku4 threading requires a browser that supports Workers and a valid path to the ku4js-workers-thread.js file. You can set that path with the $.ku4WorkerClient.threadPath([PATH]) method.")
+        throw $.ku4exception("Invalid path", "ku4 threading requires a browser that supports Workers and a valid path to the ku4js-workers-thread.js file. You can set that path with the $.ku4workerClient.threadPath([PATH]) method.")
     }
 };

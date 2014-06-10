@@ -7,12 +7,12 @@ $(function() {
 
     test("new", function () {
         expect(1);
-        ok($.ku4WorkerClient("stubs/receiver.stub.js"));
+        ok($.ku4workerClient("stubs/receiver.stub.js"));
     });
 
     asyncTest("call function", function () {
         expect(1);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(message) {
                 var data = $.json.deserialize(message);
                 equal(data, 4.15);
@@ -23,7 +23,7 @@ $(function() {
 
     asyncTest("call single method no args success", function () {
         expect(1);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(message) {
                 var data = $.json.deserialize(message);
                 equal(data, "B145.67");
@@ -34,7 +34,7 @@ $(function() {
 
     asyncTest("call single method no args success", function () {
         expect(3);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(data){
                 equal(data.a, 1);
                 equal(data.b, 2);
@@ -46,7 +46,7 @@ $(function() {
 
     asyncTest("call single method object no args success", function () {
         expect(3);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(message){
                 var data = $.dto.parseJson(message).toObject();
                 equal(data.a, 1);
@@ -59,7 +59,7 @@ $(function() {
 
     asyncTest("call method chain success", function () {
         expect(5);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(message){
                 var data = $.dto.parseJson(message).toObject();
                 ok(!data.a);
@@ -79,7 +79,7 @@ $(function() {
 
     asyncTest("call async method chain success", function () {
         expect(1);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(message){
                 equal(message, "{response: true}");
                 start();
@@ -93,7 +93,7 @@ $(function() {
 
     asyncTest("invoke async method chain with continued processing", function () {
         expect(2);
-        $.ku4WorkerClient("stubs/receiver.stub.js")
+        $.ku4workerClient("stubs/receiver.stub.js")
             .onSuccess(function(err, store) {
                 equal(err, null);
 

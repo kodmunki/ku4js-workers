@@ -7,7 +7,7 @@ $(function() {
 
     test("new", function () {
         expect(1);
-        ok($.ku4WorkerReceiver());
+        ok($.ku4workerReceiver());
     });
 
     test("execute null args", function () {
@@ -15,7 +15,7 @@ $(function() {
         function callback(data) {
             equal(data, null);
         }
-        $.ku4WorkerReceiver().execute(null, callback);
+        $.ku4workerReceiver().execute(null, callback);
     });
 
     test("execute invalid args", function () {
@@ -23,7 +23,7 @@ $(function() {
         function callback(data) {
             equal(data, null);
         }
-        $.ku4WorkerReceiver().execute({}, callback);
+        $.ku4workerReceiver().execute({}, callback);
     });
 
     test("execute empty args", function () {
@@ -31,7 +31,7 @@ $(function() {
         function callback(data) {
             equal(data, null);
         }
-        $.ku4WorkerReceiver().execute([], callback);
+        $.ku4workerReceiver().execute([], callback);
     });
 
     test("execute empty data", function () {
@@ -39,7 +39,7 @@ $(function() {
         function callback(data) {
             equal(data, null);
         }
-        $.ku4WorkerReceiver().execute({data:"[]"}, callback);
+        $.ku4workerReceiver().execute({data:"[]"}, callback);
     });
 
     test("execute simple data", function () {
@@ -49,7 +49,7 @@ $(function() {
         function callback(data) {
             equal(data, 4.15);
         }
-        $.ku4WorkerReceiver().execute({data: $.json.serialize(data)}, callback);
+        $.ku4workerReceiver().execute({data: $.json.serialize(data)}, callback);
     });
 
 
@@ -68,6 +68,6 @@ $(function() {
             equal(message, "{response: true}");
             start();
         }
-        $.ku4WorkerReceiver().execute({data: $.json.serialize(data)}, callback);
+        $.ku4workerReceiver().execute({data: $.json.serialize(data)}, callback);
     });
 });
