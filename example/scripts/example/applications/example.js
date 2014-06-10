@@ -1,13 +1,20 @@
 $.ku4WorkerClient.threadPath("scripts/example/lib/ku4js-workers-thread.js");
 
+var thread;
 function calculate(iterations) {
 
-    $.ku4WorkerClient.thread()
-        .onSuccess(function(data){
+    thread = $.ku4WorkerClient.thread()
+        .onInvoked(function(data) {
             console.log(data);
         })
-        .onError(function(data){
-            console.log(data);
+        .onSuccess(function(data, processId) {
+            console.log(data, " | ", processId);
         })
-        .invoke("$.calculator", [], "calculateNumberOfAnswers", [100000]);
+        .onCanceled(function(data) {
+            console.log("Canceled:", data);
+        })
+        .onError(function(data, processId) {
+            console.log(data, " | ", processId);
+        })
+        .invoke("$.calculator", [], "calculateNumberOfAnswers", [iterations]);
 }

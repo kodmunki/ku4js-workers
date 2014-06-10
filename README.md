@@ -27,11 +27,15 @@ this process:
 
 
 ##ku4WorkerClient
-_Documentation Coming Soon_
-
 | API | Return | Description |
 | --- | --- | --- |
-|  |  |  |
+| processId() |  |  |
+| onInvoked() |  |  |
+| onSuccess() |  |  |
+| onCanceled() |  |  |
+| onError() |  |  |
+| invoke() |  |  |
+| cancel() |  |  |
 
 ###ku4WorkerClient Examples:
 
@@ -40,10 +44,8 @@ _Documentation Coming Soon_
 ####$.ku4WorkerClient(PATH)
 
 ##ku4WorkerReceiver
-_Documentation Coming Soon_
-
 | API | Return | Description |
 | --- | --- | --- |
-|  |  |  |
+| execute |  |  |
 
 ###ku4WorkerReceiver Notes:

@@ -21,8 +21,6 @@ importScripts("ku4js-workers.js");
 
 /*=================================*/
 
-if(!$ || !$.ku4) throw new Error("Invalid importScripts paths in ku4js-workers-thread.");
-
 onmessage = function(event) {
     $.ku4WorkerReceiver().execute(event, function() {
         var result = $.list.parseArguments(arguments).toArray();

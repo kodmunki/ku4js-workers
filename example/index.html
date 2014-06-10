@@ -3,6 +3,12 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>ku4workers example</title>
+    <script language="javascript" src="./scripts/example/lib/ku4js-kernel.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-data.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-reflection.js"></script>
+    <script language="javascript" src="./scripts/example/lib/ku4js-workers.js"></script>
+    <script language="javascript" src="./scripts/example/bin/example-workers.js"></script>
+    <script language="javascript" src="./scripts/example/applications/example.js"></script>
 </head>
 <body>
 
@@ -10,13 +16,10 @@
         <button onclick="calculate(1000000); return;">Calculate, Sum and Log 1,000,000 Randoms</button>
     </div>
     <div>
+        <button onclick="thread.cancel(); return;">Cancel last thread</button>
+    </div>
+    <div>
         <button onclick="console.log('UI Thread Not Locked!'); return;">Log Proof of No UI Thread Lock</button>
     </div>
-    <script language="javascript" src="./scripts/example/lib/ku4js-kernel.js"></script>
-    <script language="javascript" src="./scripts/example/lib/ku4js-data.js"></script>
-    <script language="javascript" src="./scripts/example/lib/ku4js-reflection.js"></script>
-    <script language="javascript" src="./scripts/example/lib/ku4js-workers.js"></script>
-    <script language="javascript" src="./scripts/example/bin/example-workers.js"></script>
-    <script language="javascript" src="./scripts/example/applications/example.js"></script>
 </body>
 </html>
