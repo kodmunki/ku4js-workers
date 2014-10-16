@@ -38,16 +38,22 @@
 <h4>
 <a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h4>
 
-<hr><p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
+<hr>
+
+<p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
 
 <ul>
-<li>root<br><ul>
+<li>root<br>
+
+<ul>
 <li>_build (This build script and the yuicompressor)</li>
 <li>bin (The compiled scripts will appear here)</li>
 <li>src (All script files go here)</li>
 </ul>
 </li>
-</ul><p>The following variables found in setup () are
+</ul>
+
+<p>The following variables found in setup () are
 expected to be changed by the developer running
 this process:</p>
 
@@ -55,18 +61,22 @@ this process:</p>
 <li>PROJNAME (The name of your project)</li>
 <li>STARTMSG (A message to echo at start of build)</li>
 <li>ENDMSG (A message to echo at end of build)</li>
-</ul><h1>
+</ul>
+
+<h1>
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
 <h2>
 <a name="ku4workerclient" class="anchor" href="#ku4workerclient"><span class="octicon octicon-link"></span></a>ku4workerClient</h2>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>API</th>
 <th>Return</th>
 <th>Description</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td>processId()</td>
@@ -115,7 +125,9 @@ this process:</p>
 <td>Specifies the path to the receiver file that will be used when thread() is called.</td>
 </tr>
 </tbody>
-</table><h3>
+</table>
+
+<h3>
 <a name="ku4workerclient-examples" class="anchor" href="#ku4workerclient-examples"><span class="octicon octicon-link"></span></a>ku4workerClient Examples:</h3>
 
 <p>There are numerous ways to leverage the ku4workerClient in a project architecture. A few of the most common are
@@ -157,17 +169,23 @@ different assets. Example:</p>
 <a name="ku4workerreceiver" class="anchor" href="#ku4workerreceiver"><span class="octicon octicon-link"></span></a>ku4workerReceiver</h2>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>API</th>
 <th>Return</th>
 <th>Description</th>
-</tr></thead>
-<tbody><tr>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>execute</td>
 <td>void</td>
 <td>This method is called by the ku4js-workers-thread file and needed be called otherwise.</td>
-</tr></tbody>
-</table><h3>
+</tr>
+</tbody>
+</table>
+
+<h3>
 <a name="ku4workerreceiver-notes" class="anchor" href="#ku4workerreceiver-notes"><span class="octicon octicon-link"></span></a>ku4workerReceiver Notes:</h3>
 
 <p>Each ku4worker set up requires a ku4workerReceiver. These receivers are called from within the ku4js-workers-thread.js
@@ -181,6 +199,16 @@ found in the /example directory.</p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-55817751-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
