@@ -70,7 +70,10 @@ $.ku4workerClient.thread = function() {
     }
     catch(e)
     {
-        throw $.ku4exception("Invalid path", "ku4 threading requires a browser that supports Workers and a valid path to the ku4js-workers-thread.js file. You can set that path with the $.ku4workerClient.threadPath([PATH]) method.")
+        throw $.ku4exception("Invalid path", $.str.format(
+            "ku4 threading requires a browser that supports Workers and a valid path to the ku4js-workers-thread.js file." +
+            "You can set that path with the $.ku4workerClient.threadPath([PATH]) method. Current path: {0}",
+            __ku4workerThreadPath));
     }
 };
 

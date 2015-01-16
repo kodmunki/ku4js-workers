@@ -1,4 +1,4 @@
-$.ku4workerClient.threadPath("scripts/example/lib/ku4js-workers-thread.js");
+$.ku4workerClient.threadPath("/scripts/example/lib/ku4js-workers-thread.js");
 
 var thread;
 function calculate(iterations) {
