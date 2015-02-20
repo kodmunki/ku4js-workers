@@ -96,7 +96,7 @@ $(function() {
                 start();
             })
             .invoke("$.ku4indexedDbStore", [], {"read": ["persons",
-                "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(err){__CALLBACK__.call(err); }) }"
+                "``^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(err){__CALLBACK__.call(err); }) }"
             ]}, true);
     });
 });
