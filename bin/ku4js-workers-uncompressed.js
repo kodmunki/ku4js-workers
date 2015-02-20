@@ -3,10 +3,10 @@ function ku4workerClient(path) {
     if(!$.exists(Worker))
         throw $.ku4exception("Unsupported Feature", "Client does not support Workers.");
 
-    var onInvoked = $.observer(),
-        onSuccess = $.observer(),
-        onCanceled = $.observer(),
-        onError = $.observer(),
+    var onInvoked = $.observer("ku4workerClient_onInvoked"),
+        onSuccess = $.observer("ku4workerClient_onSuccess"),
+        onCanceled = $.observer("ku4workerClient_onCanceled"),
+        onError = $.observer("ku4workerClient_onError"),
         worker = new Worker(path);
 
     worker.onmessage = function(event) { onSuccess.notify(event.data); };
@@ -21,30 +21,30 @@ function ku4workerClient(path) {
 }
 ku4workerClient.prototype = {
     processId: function(){ return this._processId; },
-    onInvoked: function(func, scope) {
-        this._onInvoked.add(function() { func.call(scope, this._processId); }, this);
+    onInvoked: function(func, scope, id) {
+        this._onInvoked.add(function() { func.call(scope, this._processId); }, this, id);
         return this;
     },
-    onSuccess: function(func, scope) {
+    onSuccess: function(func, scope, id) {
         this._onSuccess.add(function(message) {
             var args = $.json.deserialize(message);
             if(!$.isArray(args)) args = [args];
             args.push(this._processId);
             func.apply(scope, args);
-        }, this);
+        }, this, id);
         return this;
     },
-    onCanceled: function(func, scope) {
-        this._onCanceled.add(function() { func.call(scope, this._processId); }, this);
+    onCanceled: function(func, scope, id) {
+        this._onCanceled.add(function() { func.call(scope, this._processId); }, this, id);
         return this;
     },
-    onError: function(func, scope) {
+    onError: function(func, scope, id) {
         this._onError.add(function(message) {
             var args = $.json.deserialize(message);
             if(!$.isArray(args)) args = [args];
             args.push(this._processId);
             func.apply(scope, args);
-        }, this);
+        }, this, id);
         return this;
     },
     invoke: function(Class, constructors, method, args, isAsync) {

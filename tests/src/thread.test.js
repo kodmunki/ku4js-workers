@@ -85,7 +85,7 @@ $(function() {
             .onSuccess(function(err, store) {
                 equal(err, null);
 
-                store.read("persons", function(err, collection) {
+                $.ku4indexedDbStore().read("persons", function(err, collection) {
                     equal(collection.find({id:1})[0].name, "myName");
                     collection.remove();
                     start();
@@ -96,7 +96,7 @@ $(function() {
                 start();
             })
             .invoke("$.ku4indexedDbStore", [], {"read": ["persons",
-                "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(){ __CALLBACK__; }) }"
+                "^(err, collection){ collection.insert({id:1, name:'myName'}).save(function(err){__CALLBACK__.call(err); }) }"
             ]}, true);
     });
 });
